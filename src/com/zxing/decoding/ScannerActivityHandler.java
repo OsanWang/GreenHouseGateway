@@ -29,8 +29,8 @@ import android.util.Log;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.ryancat.greenhouseclient.R;
-import com.ryancat.greenhousegateway.view.ScannerActivity;
+import com.greenhousegateway.R;
+import com.greenhousegateway.view.ScannerActivity;
 import com.zxing.camera.CameraManager;
 import com.zxing.view.ViewfinderResultPointCallback;
 

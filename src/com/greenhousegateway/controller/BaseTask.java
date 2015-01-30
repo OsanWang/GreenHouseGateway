@@ -1,6 +1,6 @@
-package com.ryancat.greenhousegateway.controller;
+package com.greenhousegateway.controller;
 
-import com.ryancat.greenhousegateway.network.HttpManager;
+import com.greenhousegateway.network.HttpManager;
 
 import android.content.Context;
 import android.os.Handler;

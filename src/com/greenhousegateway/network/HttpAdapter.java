@@ -1,4 +1,4 @@
-package com.ryancat.greenhousegateway.network;
+package com.greenhousegateway.network;
 
 
 import java.io.BufferedReader;
@@ -30,8 +30,8 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
-import com.ryancat.greenhousegateway.util.Constants;
-import com.ryancat.greenhousegateway.util.L;
+import com.greenhousegateway.util.Constants;
+import com.greenhousegateway.util.L;
 
 
 //import android.content.Context;

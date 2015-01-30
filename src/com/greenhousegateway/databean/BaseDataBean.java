@@ -1,10 +1,10 @@
-package com.ryancat.greenhousegateway.databean;
+package com.greenhousegateway.databean;
 
 import java.lang.reflect.Field;
 
-import com.ryancat.greenhousegateway.GreenHouseApplication;
-import com.ryancat.greenhousegateway.annotation.HttpAnnotation;
-import com.ryancat.greenhousegateway.util.Constants;
+import com.greenhousegateway.GreenHouseApplication;
+import com.greenhousegateway.annotation.HttpAnnotation;
+import com.greenhousegateway.util.Constants;
 
 /**
  * 网络Bean的基类，应该包含有各种的透传参数

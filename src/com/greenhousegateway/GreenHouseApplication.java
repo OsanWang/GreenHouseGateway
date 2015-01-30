@@ -1,7 +1,7 @@
-package com.ryancat.greenhousegateway;
+package com.greenhousegateway;
 
-import com.ryancat.greenhousegateway.controller.GatewayController;
-import com.ryancat.greenhousegateway.util.L;
+import com.greenhousegateway.controller.GatewayController;
+import com.greenhousegateway.util.L;
 
 import android.app.Application;
 import android.content.ComponentName;
@@ -31,8 +31,10 @@ public class GreenHouseApplication extends Application
 	public static String Ap;
 	public static String Ver;
 	public static String SysVer;
-	public static int gwid;
+	public static int gwid  = 0;
 	public static String gwToken;
+	public static String apkPath ;
+	public static int UploadTime=5;
 	/**控制器**/
 	private GatewayController mClientController;
 	@Override

@@ -1,4 +1,4 @@
-package com.ryancat.greenhousegateway.controller;
+package com.greenhousegateway.controller;
 
 public interface TaskConstants
 {
@@ -14,4 +14,5 @@ public interface TaskConstants
 	
 	public final static int GATEWAY_LOGIN = 110;
 	public final static int GATEWAY_UPLOAD = 111;
+	public final static int GATEWAY_READHARDWARE = 112;
 }

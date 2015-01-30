@@ -26,7 +26,7 @@ import android.os.Looper;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
-import com.ryancat.greenhousegateway.view.ScannerActivity;
+import com.greenhousegateway.view.ScannerActivity;
 
 /**
  * This thread does all the heavy lifting of decoding the images.

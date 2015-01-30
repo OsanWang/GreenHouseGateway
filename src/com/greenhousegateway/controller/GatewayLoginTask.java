@@ -1,10 +1,10 @@
-package com.ryancat.greenhousegateway.controller;
+package com.greenhousegateway.controller;
 
-import com.ryancat.greenhousegateway.GreenHouseApplication;
-import com.ryancat.greenhousegateway.databean.LoginDataBean;
-import com.ryancat.greenhousegateway.network.HttpManager;
-import com.ryancat.greenhousegateway.util.Constants;
-import com.ryancat.greenhousegateway.util.L;
+import com.greenhousegateway.GreenHouseApplication;
+import com.greenhousegateway.databean.LoginDataBean;
+import com.greenhousegateway.network.HttpManager;
+import com.greenhousegateway.util.Constants;
+import com.greenhousegateway.util.L;
 
 import android.content.Context;
 import android.os.Handler;
@@ -38,6 +38,7 @@ final class GatewayLoginTask extends BaseTask
 				L.d("loginDataBean is " +loginDataBean.toString());
 				GreenHouseApplication.gwid = loginDataBean.gwid;
 				GreenHouseApplication.gwToken = loginDataBean.gwToken;
+				GreenHouseApplication.apkPath = loginDataBean.clientApkUrl;
 				sendResultMessage(TASK_TAG, loginDataBean, TaskConstants.TASK_SUCCESS, 0);
 			} else
 			{

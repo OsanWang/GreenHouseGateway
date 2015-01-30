@@ -1,4 +1,4 @@
-package com.ryancat.greenhousegateway.util;
+package com.greenhousegateway.util;
 
 import android.util.Log;
 

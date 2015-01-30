@@ -1,4 +1,4 @@
-package com.ryancat.greenhousegateway.network;
+package com.greenhousegateway.network;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.google.gson.Gson;
-import com.ryancat.greenhousegateway.annotation.HttpAnnotation;
-import com.ryancat.greenhousegateway.databean.BaseDataBean;
-import com.ryancat.greenhousegateway.util.Constants;
-import com.ryancat.greenhousegateway.util.L;
+import com.greenhousegateway.annotation.HttpAnnotation;
+import com.greenhousegateway.databean.BaseDataBean;
+import com.greenhousegateway.util.Constants;
+import com.greenhousegateway.util.L;
 
 public class HttpManager
 {
@@ -40,7 +40,6 @@ public class HttpManager
 		BaseDataBean resultDataBean = null;
 		try
 		{
-			
 			Map<String, Object> requestMap = new HashMap<String, Object>();
 			Field[] fields = clazz.getFields();
 			for (int i = 0; i < fields.length; i++)
@@ -74,7 +73,10 @@ public class HttpManager
 		{
 			e.printStackTrace();
 		}
-		System.out.println(resultDataBean.toString());
+		if(resultDataBean!=null)
+		{
+			System.out.println(resultDataBean.toString());
+		}
 		return resultDataBean;
 	}
 

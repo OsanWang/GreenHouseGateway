@@ -1,4 +1,4 @@
-package com.ryancat.greenhousegateway.view;
+package com.greenhousegateway.view;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -22,8 +22,8 @@ import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.ryancat.greenhouseclient.R;
-import com.ryancat.greenhousegateway.controller.TaskConstants;
+import com.greenhousegateway.R;
+import com.greenhousegateway.controller.TaskConstants;
 import com.zxing.camera.CameraManager;
 import com.zxing.decoding.InactivityTimer;
 import com.zxing.decoding.ScannerActivityHandler;

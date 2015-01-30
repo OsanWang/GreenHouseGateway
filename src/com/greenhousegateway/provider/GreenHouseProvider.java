@@ -1,4 +1,4 @@
-package com.ryancat.greenhousegateway.provider;
+package com.greenhousegateway.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

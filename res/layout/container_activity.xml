@@ -9,9 +9,8 @@
         android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#66ff00"
+        android:background="@drawable/the_red_title_background"
          >
-
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
@@ -22,8 +21,26 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="5dp"
+            android:textColor="@color/text_color_unselected"
+            android:textSize="@dimen/application_title_textsize"
             android:text="@string/app_title" />
+
+        <ImageButton
+            android:id="@+id/title_menu_imgbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/title_menu" />
+
     </RelativeLayout>
+        <TextView 
+        android:id="@+id/netowrk_status"
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:text="未连接服务器"/>
+    
 	<RelativeLayout
 	    android:id="@+id/container_layout"
 	    android:layout_width="match_parent"

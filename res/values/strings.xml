@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">GreenhouseClient</string>
+    <string name="app_name">GreenhouseGateway</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-	<string name="app_title">app_title</string>
+	<string name="app_title">大棚网关</string>
 	<string name="register">register</string>
 	<string name="add_gateway">addGateway</string>
-		<string name="qrcode_register">qrcode_register</string>
+	<string name="qrcode_register">qrcode register</string>
+	<string name="upload_data">登录上传数据</string>
+		<string name="show_gateway_info">显示网关信息</string>
+	<string name="show_gwid_qrcode_btn">显示网关二维码</string>
+	<string name="show_client_apk_qrcode_btn">客户端下载二维码</string>
+	
+	    <string name="beam">照度:</string>
+    <string name="humi">湿度:</string>
+    <string name="temp">温度:</string>
 </resources>

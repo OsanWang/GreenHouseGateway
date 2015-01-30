@@ -1,8 +1,8 @@
-package com.ryancat.greenhousegateway.view;
+package com.greenhousegateway.view;
 
-import com.ryancat.greenhouseclient.R;
-import com.ryancat.greenhousegateway.GreenHouseApplication;
-import com.ryancat.greenhousegateway.controller.GatewayController;
+import com.greenhousegateway.GreenHouseApplication;
+import com.greenhousegateway.R;
+import com.greenhousegateway.controller.GatewayController;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * Activity的基类
@@ -30,6 +32,8 @@ public abstract class BaseActivity extends Activity implements OnClickListener
 	protected GatewayController controller;
 	protected GreenHouseApplication mApp;
 	protected Handler taskHandler;
+	protected ImageButton mMenuButton;
+	protected TextView mNetworkStatusTV;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +44,16 @@ public abstract class BaseActivity extends Activity implements OnClickListener
 		mBackgroundView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.container_activity, null);
 		setContentView(mBackgroundView);
 		containerView = (ViewGroup) mBackgroundView.findViewById(R.id.container_layout);
+		mNetworkStatusTV = (TextView)mBackgroundView.findViewById(R.id.netowrk_status);
+		if(GreenHouseApplication.gwToken!=null)
+		{
+			mNetworkStatusTV.setText("已登录到服务器");
+		}
+		else
+		{
+			mNetworkStatusTV.setText("未登录到服务器");
+		}
+
 		initViews();
 		init();
 		if (showView.getLayoutParams() == null)
@@ -47,15 +61,17 @@ public abstract class BaseActivity extends Activity implements OnClickListener
 			showView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		}
 		containerView.addView(showView);
-	
+		mMenuButton = (ImageButton) mBackgroundView.findViewById(R.id.title_menu_imgbtn);
+		mMenuButton.setOnClickListener(this);
+		setTaskHandler();
+		progressLogic();
+
 	}
 
 	@Override
 	protected void onStart()
 	{
 		super.onStart();
-		setTaskHandler();
-		progressLogic();
 
 	}
 

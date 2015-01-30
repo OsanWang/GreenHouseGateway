@@ -1,14 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-    <Button
-        android:id="@+id/login_register_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/add_gateway" />
+    android:orientation="vertical" >
 
-</RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/upload_time_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/editText1"
+                        android:layout_alignBottom="@+id/editText1"
+                        android:layout_alignParentLeft="true"
+                        android:text="上传数据时间间隔(分钟)"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <EditText
+                        android:id="@+id/upload_time_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/upload_time_tv"
+                        android:ems="6"
+                        android:inputType="number" >
+
+                        <requestFocus />
+                    </EditText>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/device_info_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/login_register_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upload_data" />
+
+                <Button
+                    android:id="@+id/show_device_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_gateway_info" />
+
+                <Button
+                    android:id="@+id/show_gwid_qrcode_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_gwid_qrcode_btn" />
+
+                <Button
+                    android:id="@+id/show_client_apk_qrcode_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_client_apk_qrcode_btn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temp" />
+
+                    <TextView
+                        android:id="@+id/temp_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temp" />
+                </LinearLayout>
+
+                <cn.limc.androidcharts.view.MAChart
+                    android:id="@+id/temp_machart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="120dip" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/humi" />
+
+                    <TextView
+                        android:id="@+id/humi_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/humi" />
+                </LinearLayout>
+
+                <cn.limc.androidcharts.view.MAChart
+                    android:id="@+id/humi_machart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="120dip" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/beam" />
+
+                    <TextView
+                        android:id="@+id/beam_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/beam" />
+                </LinearLayout>
+
+                <cn.limc.androidcharts.view.MAChart
+                    android:id="@+id/beam_machart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="120dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

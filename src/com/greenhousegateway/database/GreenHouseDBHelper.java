@@ -1,4 +1,4 @@
-package com.ryancat.greenhousegateway.database;
+package com.greenhousegateway.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,7 +1,7 @@
-package com.ryancat.greenhousegateway.databean;
+package com.greenhousegateway.databean;
 
-import com.ryancat.greenhousegateway.annotation.HttpAnnotation;
-import com.ryancat.greenhousegateway.util.Constants;
+import com.greenhousegateway.annotation.HttpAnnotation;
+import com.greenhousegateway.util.Constants;
 /**
  * 登陆接口传递的DataBean
  * @author RyanHu

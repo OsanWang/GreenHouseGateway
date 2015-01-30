@@ -1,10 +1,11 @@
-package com.ryancat.greenhousegateway.controller;
+package com.greenhousegateway.controller;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.google.gson.Gson;
-import com.ryancat.greenhousegateway.util.L;
+import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.util.L;
 
 import android.app.Service;
 import android.content.Context;
@@ -46,9 +47,22 @@ public class GatewayController
 	{
 		mExecutorService.execute(new GatewayLoginTask(taskHandler,mContext));
 	}
-	public void gatewayUpload(Handler taskHandler, int _temperature , int _humidity,int _beam )
+	/**
+	 * 网关上传数据的API
+	 * @param taskHandler
+	 * @param _temperature
+	 * @param _humidity
+	 * @param _beam
+	 */
+	public void gatewayUpload(Handler taskHandler,UploadDataBean uploadDataBean )
 	{
-		mExecutorService.execute(new GatewayUploadTask(taskHandler,mContext, _temperature, _humidity, _beam));
+		mExecutorService.execute(new GatewayUploadTask(taskHandler,mContext, uploadDataBean));
 	}
-	
+	/**
+	 * 
+	 */
+	public void getTestDataFromHardware(Handler taskHandler)
+	{
+		mExecutorService.execute(new ReadHardwareDataTask(taskHandler, mContext));
+	}
 }

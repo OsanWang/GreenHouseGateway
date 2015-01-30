@@ -30,7 +30,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.zxing.ResultPoint;
-import com.ryancat.greenhouseclient.R;
+import com.greenhousegateway.R;
 import com.zxing.camera.CameraManager;
 
 /**
