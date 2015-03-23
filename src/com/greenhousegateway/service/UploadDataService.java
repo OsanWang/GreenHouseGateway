@@ -12,6 +12,9 @@ import com.greenhousegateway.controller.TaskConstants;
 import com.greenhousegateway.databean.LoginDataBean;
 import com.greenhousegateway.databean.UploadDataBean;
 import com.greenhousegateway.util.Constants;
+import com.greenhousegateway.util.GreenHouseUtils;
+import com.greenhousegateway.util.L;
+import com.greenhousegateway.view.DetectorActivity;
 import com.greenhousegateway.view.LoginActivity;
 
 import android.app.Service;
@@ -24,18 +27,20 @@ import android.widget.Toast;
 public class UploadDataService extends Service
 {
 	private GatewayController controller;
-	private ScheduledExecutorService mScheduledService;
+	private ExecutorService mSingleThreadExecutor;
 	private TaskHandler mTaskHandler;
+	public static volatile boolean isUploadWorking;
 	
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
-		mScheduledService = Executors.newSingleThreadScheduledExecutor();
+		mSingleThreadExecutor = Executors.newSingleThreadExecutor();
 		controller =GatewayController.getInstance(this);
 		mTaskHandler = new TaskHandler();
 		//首先去拿网关id
 		controller.gatewayLogin(mTaskHandler);
+		GreenHouseUtils.acquireWakeLock(this);
 	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
@@ -53,7 +58,9 @@ public class UploadDataService extends Service
 		@Override
 		public void run()
 		{
+			L.d("UploadDataScheduledRunnable~~~~~");
 			controller.getTestDataFromHardware(mTaskHandler);
+			isUploadWorking = true;
 		}
 	}
 	private class TaskHandler extends Handler 
@@ -74,7 +81,7 @@ public class UploadDataService extends Service
 					}
 					LoginDataBean bean = (LoginDataBean) msg.obj;
 					Toast.makeText(UploadDataService.this, "登录成功："+bean.toString()+",准备开始上传数据", Toast.LENGTH_LONG).show();
-					mScheduledService.scheduleWithFixedDelay(new UploadDataScheduledRunnable(), 0, GreenHouseApplication.UploadTime, TimeUnit.MINUTES);
+					mSingleThreadExecutor.execute(new UploadDataScheduledRunnable());
 				}
 				else{
 					Toast.makeText(UploadDataService.this, "登录失败,请检查网关在后台有无注册！：", Toast.LENGTH_LONG).show();
@@ -83,23 +90,32 @@ public class UploadDataService extends Service
 
 			case TaskConstants.GATEWAY_READHARDWARE:
 				//读取硬件数据成功，准备上传
-				int[] readResult = (int[]) msg.obj;
-				int temp =readResult[0];
-				int humi = readResult[1];
-				int beam = readResult[2];
-				Toast.makeText(UploadDataService.this, "硬件数据读取成功！温度："+temp+",湿度："+humi+",照度："+beam+"！准备上传！", Toast.LENGTH_LONG).show();
+				L.d("GATEWAY_READHARDWARE");
+
+				double[] readResult = (double[]) msg.obj;
+				double temp =readResult[0];
+				double humi = readResult[1];
+				double beam = readResult[2];
 				//把数据放入DataKeeper
 				UploadDataBean dataBean = new UploadDataBean();
 				dataBean.temperature = temp;
 				dataBean.humidity =humi;
 				dataBean.beam  = beam;
 				DataKeeper.dataKeeper_hour.add(dataBean);
-				while(DataKeeper.dataKeeper_hour.size()>12)
+				while(DataKeeper.dataKeeper_hour.size()>60)
 				{
 					DataKeeper.dataKeeper_hour.remove(0);
 				}
-				LoginActivity.getHandler().sendEmptyMessage(TaskConstants.GATEWAY_READHARDWARE);
+				if(LoginActivity.getHandler()!=null)
+				{
+					LoginActivity.getHandler().sendEmptyMessage(TaskConstants.GATEWAY_READHARDWARE);
+				}
+				if(DetectorActivity.getHandler()!=null)
+				{
+					DetectorActivity.getHandler().sendEmptyMessage(TaskConstants.GATEWAY_READHARDWARE);
+				}
 				//上传数据
+				Toast.makeText(UploadDataService.this, "硬件数据读取成功！温度："+temp+",湿度："+humi+",照度："+beam+"！准备上传！", Toast.LENGTH_LONG).show();
 				controller.gatewayUpload(this, dataBean);
 				break;
 			case TaskConstants.GATEWAY_UPLOAD:

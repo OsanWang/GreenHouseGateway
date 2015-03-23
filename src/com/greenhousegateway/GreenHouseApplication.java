@@ -1,7 +1,9 @@
 package com.greenhousegateway;
 
 import com.greenhousegateway.controller.GatewayController;
+import com.greenhousegateway.util.GreenHouseUtils;
 import com.greenhousegateway.util.L;
+import com.greenhousegateway.util.Lw;
 
 import android.app.Application;
 import android.content.ComponentName;
@@ -34,7 +36,7 @@ public class GreenHouseApplication extends Application
 	public static int gwid  = 0;
 	public static String gwToken;
 	public static String apkPath ;
-	public static int UploadTime=5;
+	public static int UploadTime=1;
 	/**控制器**/
 	private GatewayController mClientController;
 	@Override
@@ -50,6 +52,7 @@ public class GreenHouseApplication extends Application
 	private void init ()
 	{
 		L.isOpenLog(true);
+		Lw.setWrite(true);
 		mClientController = GatewayController.getInstance(this);
 		initFiled();
 	}
@@ -67,46 +70,11 @@ public class GreenHouseApplication extends Application
 	 */
 	private void initFiled()
 	{
-		IMEI = getIMEI();
-		Mac = getMac();
+		IMEI = GreenHouseUtils.getIMEI(this);
+		Mac = GreenHouseUtils.getMac(this);
 		Ua = android.os.Build.MODEL;
 		SysVer=android.os.Build.VERSION.RELEASE;
-		Ver = getAppVersionName(this);
-		Ap ="wifi";
+		Ver = GreenHouseUtils.getAppVersionName(this);
+		Ap =GreenHouseUtils.getAccessPointName(this);
 	}
-
-	private String getMac()
-	{
-
-		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-
-		WifiInfo info = wifi.getConnectionInfo();
-
-		return info.getMacAddress();
-
-	}
-
-	private String getIMEI()
-	{
-		TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-		String imei = telephonyManager.getDeviceId();
-		// 需要在manifest中加入 <uses-permission
-		// android:name="android.permission.READ_PHONE_STATE"/>
-		return imei;
-
-	}
-	/**
-	 * 获取版本名称
-	 */
-	public  String getAppVersionName(Context context) {
-		PackageManager pm = context.getPackageManager();
-		try {
-			PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
-			return pi.versionName;
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
-
 }

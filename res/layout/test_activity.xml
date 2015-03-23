@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/read_data_test_btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="两秒一次读数据" />
+
+        <Button
+            android:id="@+id/read_data_test_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="十秒一次读数据" />
+
+        <Button
+            android:id="@+id/read_data_test_btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50毫秒一次读数据" />
+
+        <Button
+            android:id="@+id/clear_log_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清除日志" />
+
+        <Button
+            android:id="@+id/read_log_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="读取日志" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/log_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/log_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="暂无日志" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

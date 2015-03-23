@@ -1,5 +1,7 @@
 package com.greenhousegateway.controller;
 
+import java.util.Date;
+
 import com.greenhousegateway.GreenHouseApplication;
 import com.greenhousegateway.databean.LoginDataBean;
 import com.greenhousegateway.databean.UploadDataBean;
@@ -33,10 +35,15 @@ final class GatewayUploadTask extends BaseTask
 	@Override
 	public void run()
 	{
+		L.d("GatewayUploadTask run");
 		uploadDataBean.gwid = GreenHouseApplication.gwid;
 		uploadDataBean.gwToken = GreenHouseApplication.gwToken;
-		
+		uploadDataBean.logTime = new Date().getTime();
 		uploadDataBean = (UploadDataBean)httpManager.requestServer(Constants.Upload_Url, uploadDataBean, true);
+		if(uploadDataBean==null)
+		{
+			return ;
+		}
 		if(uploadDataBean.status.equals(Constants.Status_Success))
 		{
 			sendResultMessage(TASK_TAG, uploadDataBean,TaskConstants.TASK_SUCCESS,0);

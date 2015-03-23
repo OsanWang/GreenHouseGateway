@@ -32,6 +32,11 @@ final class GatewayLoginTask extends BaseTask
 			LoginDataBean loginDataBean = new LoginDataBean();
 //			loginDataBean.gwid = GreenHouseApplication.gwid;
 			loginDataBean = (LoginDataBean) httpManager.requestServer(Constants.Login_Url, loginDataBean, true);
+			if(loginDataBean ==null)
+			{
+				L.e("登录接口出错 ---->未获取到数据！");
+				return;
+			}
 			if (loginDataBean.status.equals(Constants.Status_Success))
 			{
 				L.d("login success!");

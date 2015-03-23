@@ -3,7 +3,6 @@ package com.greenhousegateway.util;
 /**
  * 保存常量的，比如服务器地址，编码什么的。
  * @author RyanHu
- *
  */
 public interface Constants
 {
@@ -18,11 +17,9 @@ public interface Constants
 	String Status_Success = "success";
 
 	
-	
-	String Server_Address = "http://yirenna.com:8081";
+	String Server_Address = "http://120.132.70.185:8080";
 	String Login_Url =Server_Address+"/dp/gw/login.do?";//登录地址
 	String Upload_Url = Server_Address+"/dp/gw/upload.do?";//上传数据地址
-
 
 	int TEMP_MAX =100;
 	int BEAM_MAX =100;

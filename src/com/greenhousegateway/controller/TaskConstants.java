@@ -2,6 +2,10 @@ package com.greenhousegateway.controller;
 
 public interface TaskConstants
 {
+	public final static int TASK_START = 1;
+	public final static int TASK_PROCESS = 2;
+	public final static int TASK_FINISH = 3;
+	
 	public final static int TASK_SUCCESS = 0;
 	public final static int TASK_FAILED = -1;
 
