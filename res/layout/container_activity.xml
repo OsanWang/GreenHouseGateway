@@ -26,12 +26,13 @@
             android:text="@string/app_title" />
 
         <ImageButton
+            android:layout_margin="5dp"
             android:id="@+id/title_menu_imgbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/title_menu" />
+            android:background="@drawable/title_menu" />
 
     </RelativeLayout>
         <TextView 

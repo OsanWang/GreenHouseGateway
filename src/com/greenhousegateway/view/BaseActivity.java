@@ -6,6 +6,7 @@ import com.greenhousegateway.controller.GatewayController;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -132,4 +133,23 @@ public abstract class BaseActivity extends Activity implements OnClickListener
 	protected Handler getTaskHandler (){
 		return taskHandler;
 	}
+	/**
+	 * 使用action启动Activity
+	 * @param action
+	 */
+	protected void startActivityByAction(String action)
+	{
+		Intent t_intent =new Intent(action);
+		startActivity(t_intent);
+	}
+	/**
+	 * 使用class启动activity
+	 * @param clazz
+	 */
+	protected void startActivityByName(Class clazz)
+	{
+		Intent t_intent =new Intent(BaseActivity.this,clazz);
+		startActivity(t_intent);
+	}
+
 }

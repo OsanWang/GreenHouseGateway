@@ -36,27 +36,27 @@ public class TestActivity extends BaseActivity
 		{
 			Lw.ClearLog(mApp);
 			log_tv.setText("暂无日志");
-			return ;
+			return;
 		}
 		if (v.getId() == R.id.read_log_btn)
 		{
 			new Thread()
 			{
-				public void run() {
-					final String log_str  = Lw.ReadLog(mApp);
+				public void run()
+				{
+					final String log_str = Lw.ReadLog(mApp);
 					runOnUiThread(new Runnable()
 					{
-						
+
 						@Override
 						public void run()
 						{
 							log_tv.setText(log_str);
 						}
-					}
-					);
+					});
 				};
 			}.start();
-			return ;
+			return;
 		}
 		UploadDataService.isUploadWorking = UploadDataService.isUploadWorking ? false : true;
 		String msg = UploadDataService.isUploadWorking ? "准备读取数据，请稍等十秒左右" : "停止读取数据";
@@ -87,7 +87,7 @@ public class TestActivity extends BaseActivity
 		mReadDataBtn2 = (Button) showView.findViewById(R.id.read_data_test_btn2);
 		mReadDataBtn3 = (Button) showView.findViewById(R.id.read_data_test_btn3);
 		mClearLogBtn = (Button) showView.findViewById(R.id.clear_log_btn);
-		mReadLogBtn = (Button)showView.findViewById(R.id.read_log_btn);
+		mReadLogBtn = (Button) showView.findViewById(R.id.read_log_btn);
 		log_tv = (TextView) showView.findViewById(R.id.log_tv);
 		mReadDataBtn1.setOnClickListener(this);
 		mReadDataBtn2.setOnClickListener(this);
@@ -114,7 +114,7 @@ public class TestActivity extends BaseActivity
 				super.handleMessage(msg);
 				switch (msg.what)
 				{
-				case TaskConstants.GATEWAY_READHARDWARE:
+				case TaskConstants.GATEWAY_READHARDWARE_TASK:
 					if (msg.arg1 == TaskConstants.TASK_SUCCESS)
 					{
 
@@ -130,18 +130,18 @@ public class TestActivity extends BaseActivity
 						dataBean.temperature = temp;
 						dataBean.humidity = humi;
 						dataBean.beam = beam;
-						DataKeeper.dataKeeper_hour.add(dataBean);
-						while (DataKeeper.dataKeeper_hour.size() > 60)
+//						DataKeeper.dataKeeper_hour.add(dataBean);
+//						while (DataKeeper.dataKeeper_hour.size() > 60)
+//						{
+//							DataKeeper.dataKeeper_hour.remove(0);
+//						}
+						if (ShowDetectorActivity.getHandler() != null)
 						{
-							DataKeeper.dataKeeper_hour.remove(0);
+							ShowDetectorActivity.getHandler().sendEmptyMessage(TaskConstants.GATEWAY_READHARDWARE_TASK);
 						}
-						if (LoginActivity.getHandler() != null)
+						if (ShowChartActivity.getHandler() != null)
 						{
-							LoginActivity.getHandler().sendEmptyMessage(TaskConstants.GATEWAY_READHARDWARE);
-						}
-						if (DetectorActivity.getHandler() != null)
-						{
-							DetectorActivity.getHandler().sendEmptyMessage(TaskConstants.GATEWAY_READHARDWARE);
+							ShowChartActivity.getHandler().sendEmptyMessage(TaskConstants.GATEWAY_READHARDWARE_TASK);
 						}
 						// 上传数据
 						Toast.makeText(TestActivity.this, "硬件数据读取成功！温度：" + temp + ",湿度：" + humi + ",照度：" + beam + "!", Toast.LENGTH_LONG).show();

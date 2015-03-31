@@ -37,6 +37,7 @@ public class GreenHouseApplication extends Application
 	public static String gwToken;
 	public static String apkPath ;
 	public static int UploadTime=1;
+	public static long SERVER_TIME ;
 	/**控制器**/
 	private GatewayController mClientController;
 	@Override
@@ -52,7 +53,7 @@ public class GreenHouseApplication extends Application
 	private void init ()
 	{
 		L.isOpenLog(true);
-		Lw.setWrite(true);
+		Lw.setWrite(false);
 		mClientController = GatewayController.getInstance(this);
 		initFiled();
 	}

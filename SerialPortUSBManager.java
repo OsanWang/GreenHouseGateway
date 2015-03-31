@@ -159,10 +159,11 @@ public class SerialPortUSBManager
 	{
 		try
 		{
+
 			int len;
 			byte[] rbuf = new byte[PL2303Driver.READBUF_SIZE];
 
-//			L.d( "Enter readDataFromSerial");
+			L.d( "Enter readDataFromSerial");
 
 			if (null == mSerial)
 				return null;
@@ -182,7 +183,7 @@ public class SerialPortUSBManager
 			{
 				if (SHOW_DEBUG)
 				{
-//					L.d(  "read len : " + len);
+					L.d(  "read len : " + len);
 				}
 				StringBuffer sbHex = new StringBuffer();
 				List<String> result = new ArrayList<String>();
@@ -205,7 +206,7 @@ public class SerialPortUSBManager
 			{
 				if (SHOW_DEBUG)
 				{
-//					L.d( "read len : 0 ");
+					L.d( "read len : 0 ");
 				}
 				return null;
 			}

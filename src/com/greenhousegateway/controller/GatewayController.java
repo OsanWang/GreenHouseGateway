@@ -1,5 +1,6 @@
 package com.greenhousegateway.controller;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,13 +43,25 @@ public class GatewayController
 		sInstance.mContext = _context;
 		return sInstance;
 	}
+	
 	/**
 	 * 网关登录的外部API
 	 */
 	public void gatewayLogin(Handler taskHandler)
 	{
-		mExecutorService.execute(new GatewayLoginTask(taskHandler,mContext));
+		startTask(new GatewayLoginTask(taskHandler,mContext));
 	}
+	
+	/**
+	 * 读取网关带有的探头列表
+	 * @param taskHandler
+	 */
+	public void getDetectorList(Handler taskHandler)
+	{
+		startTask(new RequestDetectorListTask(taskHandler, mContext));
+
+	}
+	
 	/**
 	 * 网关上传数据的API
 	 * @param taskHandler
@@ -56,21 +69,52 @@ public class GatewayController
 	 * @param _humidity
 	 * @param _beam
 	 */
-	public void gatewayUpload(Handler taskHandler,UploadDataBean uploadDataBean )
+	public void gatewayUpload(Handler taskHandler,List<UploadDataBean> uploadDataBeans )
 	{
+		startTask(new GatewayUploadTask(taskHandler,mContext, uploadDataBeans));
 
-		mExecutorService.execute(new GatewayUploadTask(taskHandler,mContext, uploadDataBean));
-	}
-	public void gatewayAddDetector()
-	{
-		
 	}
 	
+	/**
+	 * 添加探头
+	 * @param taskHandler
+	 */
+	public void addDetector(Handler taskHandler,String _dmac)
+	{
+		startTask(new GatewayAddDetectorTask(taskHandler, mContext,_dmac));
+	}
+	/**
+	 * 删除探头
+	 * @param taskHandler
+	 */
+	public void delDetector(Handler taskHandler, String _dmac)
+	{
+		startTask(new GatewayDelDetectorTask(taskHandler, mContext ,_dmac));
+	}
+
+	/**
+	 * 获取服务器时间
+	 * @param taskHandler
+	 */
+	public void getServerTime(Handler taskHandler)
+	{
+		startTask(new GetServerTimeTask(taskHandler,mContext));
+	}
 	/**
 	 * 从硬件读取数据
 	 */
 	public void getTestDataFromHardware(Handler taskHandler)
 	{
-		mExecutorService.execute(new ReadHardwareDataTask(taskHandler, mContext));
+		startTask(new ReadHardwareDataTask(taskHandler, mContext));
+	}
+	
+	/**
+	 * 开始任务
+	 * @param task
+	 */
+	private void startTask (BaseTask task)
+	{
+		L.d("start task --->"+task.getClass().getSimpleName());
+		mExecutorService.execute(task);
 	}
 }

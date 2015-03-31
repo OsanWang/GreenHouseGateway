@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2px"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/detector_id_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/detector_id_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="探头ID:" />
+
+            <TextView
+                android:id="@+id/detector_id_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detector_mac_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/detector_mac_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="探头MAC:" />
+
+            <TextView
+                android:id="@+id/detector_mac_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detector_temp_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/detector_temp_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="温度:" />
+
+            <TextView
+                android:id="@+id/detector_temp_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detector_humi_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/detector_humi_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="湿度:" />
+
+            <TextView
+                android:id="@+id/detector_humi_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detector_beam_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/detector_beam_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="照度:" />
+
+            <TextView
+                android:id="@+id/detector_beam_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detector_power_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/detector_power_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电量:" />
+
+            <TextView
+                android:id="@+id/detector_power_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

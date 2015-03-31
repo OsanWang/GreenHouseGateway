@@ -84,28 +84,19 @@ public class ReadHardwareDataTask extends BaseTask
 			Thread.sleep(10 * 1000);
 			while (UploadDataService.isUploadWorking)
 			{
-				// L.d("读取数据线程运行中->" + new
-				// SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +
-				// " , 读取时间间隔 = " + SLEEP_TIME + "毫秒");
-				// Lw.WriteLog(context, "读取数据线程运行中->" + new
-				// SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+				L.d("读取数据线程运行中->" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " , 读取时间间隔 = " + SLEEP_TIME + "毫秒");
+				Lw.WriteLog(context, "读取数据线程运行中->" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 				try
 				{
-					// L.d("线程即将睡眠->" + new
-					// SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new
-					// Date()));
+					L.d("线程即将睡眠->" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 					Lw.WriteLog(context, "线程即将睡眠->" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 					Thread.sleep(SLEEP_TIME);
-					// L.d("睡眠结束->" + new
-					// SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new
-					// Date()));
-					// Lw.WriteLog(context, "睡眠结束->" + new
-					// SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new
-					// Date()));
+					L.d("睡眠结束->" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+					Lw.WriteLog(context, "睡眠结束->" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 					List<String> result_list = usbReader.readDataFromSerial();
-					if (result_list != null && result_list.size() > 0)
+					if (result_list.size() > 0)
 					{
-						String result = result_list.get(0);
+						String result = usbReader.readDataFromSerial().get(0);
 						Lw.WriteLog(context, "读取硬件数据成功，读取到->" + result + ",开始解析数据");
 						L.d("读取硬件数据成功，读取到数据->" + result);
 						String sub1[] = result.split("mac:");
@@ -132,7 +123,6 @@ public class ReadHardwareDataTask extends BaseTask
 						uploadDataBean.humidity = Double.parseDouble(humi);
 						uploadDataBean.beam = Double.parseDouble(light);
 						uploadDataBean.power = Double.parseDouble(power);
-						uploadDataBean.delivered = -1;
 						sendResultMessage(TASK_TAG, uploadDataBean, TaskConstants.TASK_SUCCESS, 0);
 					}
 				} catch (Exception e)

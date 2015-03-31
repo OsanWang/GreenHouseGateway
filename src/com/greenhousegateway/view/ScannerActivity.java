@@ -2,6 +2,7 @@ package com.greenhousegateway.view;
 
 import java.io.IOException;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -31,8 +32,9 @@ import com.zxing.view.ViewfinderView;
 
 /**
  * 扫描二维码的Activity
+ * 
  * @author RyanHu
- *
+ * 
  */
 public class ScannerActivity extends BaseActivity implements Callback
 {
@@ -57,6 +59,7 @@ public class ScannerActivity extends BaseActivity implements Callback
 		// ViewUtil.addTopView(getApplicationContext(), this,
 		// R.string.scan_card);
 	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume()
@@ -120,21 +123,17 @@ public class ScannerActivity extends BaseActivity implements Callback
 			Bundle bundle = new Bundle();
 			bundle.putString("result", resultString);
 			resultIntent.putExtras(bundle);
-			this.setResult(RESULT_OK, resultIntent);
-//			Toast.makeText(getApplicationContext(), "result is " + result, 1).show();
+			Toast.makeText(getApplicationContext(), "result is " + result, 1).show();
 		}
-//		ScannerActivity.this.finish();
 		try
 		{
-			int gwid = Integer.parseInt(resultString);
-//			controller.addGateway(getTaskHandler(),gwid);
-		}
-		catch(Exception e){
-			//转换错误
+			controller.addDetector(taskHandler, result.getText());
+		} catch (Exception e)
+		{
+			// 转换错误
 			e.printStackTrace();
 		}
 	}
-	
 
 	private void initCamera(SurfaceHolder surfaceHolder)
 	{
@@ -265,11 +264,11 @@ public class ScannerActivity extends BaseActivity implements Callback
 	@Override
 	protected void progressLogic()
 	{
-		
+
 	}
-	
+
 	@Override
-	protected void  setTaskHandler()
+	protected void setTaskHandler()
 	{
 		taskHandler = new Handler()
 		{
@@ -277,14 +276,15 @@ public class ScannerActivity extends BaseActivity implements Callback
 			{
 				switch (msg.what)
 				{
-				case TaskConstants.ADD_GATEWAY_TASK:
-					if(msg.arg1 ==TaskConstants.TASK_SUCCESS){
-						ScannerActivity.this.finish();
-						Toast.makeText(mApp, "添加网关成功", Toast.LENGTH_LONG).show();
-					}
-					else
+				case TaskConstants.ADD_DETECTOR_TASK:
+					if (msg.arg1 == TaskConstants.TASK_SUCCESS)
 					{
-						Toast.makeText(mApp, "添加网关失败", Toast.LENGTH_LONG).show();
+						startActivityByName(GatewayLoginActivity.class);
+						ScannerActivity.this.finish();
+						Toast.makeText(mApp, "添加探头成功", Toast.LENGTH_LONG).show();
+					} else
+					{
+						Toast.makeText(mApp, "添加探头失败", Toast.LENGTH_LONG).show();
 
 					}
 					break;

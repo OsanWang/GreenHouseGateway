@@ -8,183 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="600"
-        android:background="#000000"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/rl_ll_hor1"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:layout_height="match_parent" >
 
-            <LinearLayout
-                android:id="@+id/rl_ll_ll_ver1"
+            <GridLayout
+                android:orientation="horizontal"
+                android:id="@+id/detectors_gridlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="0.5dp"
-                android:layout_weight="1"
-                android:background="#ffffff"
-                android:clickable="true"
-                android:orientation="vertical"
-                android:padding="@dimen/activity_vertical_margin" >
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_decetorname1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="探测器:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_temp1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="温度:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_humi1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="湿度:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_beam1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="光照:"
-                    android:textSize="@dimen/application_title_textsize" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rl_ll_ll_ver2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="0.5dp"
-                android:layout_weight="1"
-                android:background="#ffffff"
-                android:orientation="vertical"
-                android:padding="@dimen/activity_vertical_margin" >
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_decetorname2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="探测器:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_temp2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="温度:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_humi2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="湿度:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_beam2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="光照:"
-                    android:textSize="@dimen/application_title_textsize" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/rl_ll_hor2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_weight="1"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:id="@+id/rl_ll_ll_ver3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="0.5dp"
-                android:layout_weight="1"
-                android:background="#ffffff"
-                android:orientation="vertical"
-                android:padding="@dimen/activity_vertical_margin" >
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_decetorname3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="探测器:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_temp3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="温度:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_humi3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="湿度:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_beam3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="光照:"
-                    android:textSize="@dimen/application_title_textsize" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rl_ll_ll_ver4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="0.5dp"
-                android:layout_weight="1"
-                android:background="#ffffff"
-                android:orientation="vertical"
-                android:padding="@dimen/activity_vertical_margin" >
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_decetorname4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="探测器:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_temp4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="温度:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_humi4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="湿度:"
-                    android:textSize="@dimen/application_title_textsize" />
-
-                <TextView
-                    android:id="@+id/rl_ll_ll_tv_beam4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="光照:"
-                    android:textSize="@dimen/application_title_textsize" />
-            </LinearLayout>
-        </LinearLayout>
+                android:columnCount="2"
+                >
+            </GridLayout>
+        </ScrollView>
     </LinearLayout>
 
     <LinearLayout
@@ -194,13 +32,6 @@
         android:layout_alignParentLeft="true"
         android:layout_weight="1"
         android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/login_register_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/upload_data" />
 
         <Button
             android:id="@+id/show_device_info"

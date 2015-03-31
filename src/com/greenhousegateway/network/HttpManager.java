@@ -29,12 +29,16 @@ public class HttpManager
 
 	/**
 	 * 请求服务器
-	 * @param url 地址
-	 * @param requestDataBean 请求的dataBean
-	 * @param isPost 是否为post
+	 * 
+	 * @param url
+	 *            地址
+	 * @param requestDataBean
+	 *            请求的dataBean
+	 * @param isPost
+	 *            是否为post
 	 * @return
 	 */
-	public BaseDataBean requestServer(String url, BaseDataBean requestDataBean, boolean isPost)
+	public BaseDataBean requestServer(String url, BaseDataBean requestDataBean, boolean isPost, String... data)
 	{
 		Class clazz = requestDataBean.getClass();
 		BaseDataBean resultDataBean = null;
@@ -51,29 +55,35 @@ public class HttpManager
 				}
 			}
 			String response = "";
-			if (isPost)
+			if (data.length == 0)
 			{
-				response= httpPost(url, requestMap);
+
+				if (isPost)
+				{
+					response = httpPost(url, requestMap);
+				} else
+				{
+					response = httpGet(url, requestMap);
+				}
 			} else
 			{
-				response = httpGet(url, requestMap);
-
+				response = postJson(url, requestMap, data[0]);
 			}
-			L.d("rsp -->"+response);
-
-			//这里不去new而是使用原有的dataBean减少开销
+			L.d("rsp -->" + response);
+			// 这里不去new而是使用原有的dataBean减少开销
+			// 在这里封装为gson
 			resultDataBean = (BaseDataBean) clazz.newInstance();
-			//在这里封装为gson
 			Gson gson = new Gson();
 			resultDataBean = gson.fromJson(response, clazz);
-		}catch (IllegalAccessException e)
+
+		} catch (IllegalAccessException e)
 		{
 			e.printStackTrace();
 		} catch (InstantiationException e)
 		{
 			e.printStackTrace();
 		}
-		if(resultDataBean!=null)
+		if (resultDataBean != null)
 		{
 			System.out.println(resultDataBean.toString());
 		}
@@ -88,5 +98,10 @@ public class HttpManager
 	private String httpPost(String url, Map<String, Object> param)
 	{
 		return adapter.post(url, param);
+	}
+
+	public String postJson(String url, Map<String, Object> param, String data)
+	{
+		return adapter.postRequest(url,param,  data);
 	}
 }
