@@ -36,4 +36,11 @@ public final class UploadDataBean
 	public double power;
 	// 是否已经送达
 	public int delivered;
+	@Override
+	public String toString()
+	{
+		return "UploadDataBean [gwid=" + gwid + ", dmac=" + dmac + ", did=" + did + ", gwToken=" + gwToken + ", temperature=" + temperature + ", humidity=" + humidity + ", beam=" + beam + ", power=" + power + ", delivered=" + delivered + "]";
+	}
+	
+	
 }

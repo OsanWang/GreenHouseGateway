@@ -1,6 +1,8 @@
 package com.greenhousegateway.util;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.greenhousegateway.GreenHouseApplication;
 
@@ -114,6 +116,7 @@ public class GreenHouseUtils
 
 	/**
 	 * 获取计算后的服务器时间
+	 * 
 	 * @return
 	 */
 	public static long getServerTime()
@@ -141,6 +144,40 @@ public class GreenHouseUtils
 		if (clazz == Float.class || clazz == float.class)
 			return cursor.getFloat(index);
 		return null;
+
+	}
+
+	public static Map<String, String> parseSerialNumber(String SerialNumber)
+	{
+		if (SerialNumber.length() != 36)
+		{// 序列号不符合定义
+			return null;
+		}
+		Map<String, String> result = new HashMap<String, String>();
+		String MainType = SerialNumber.substring(0, 4);
+		String SubType = SerialNumber.substring(4, 8);
+		String factoryType = SerialNumber.substring(8, 10);
+		String date = SerialNumber.substring(10, 16);
+		String serial = SerialNumber.substring(16, 20);
+		char[] mac = SerialNumber.substring(20, 36).toCharArray();
+		// 再对mac进行一次转换
+		StringBuffer sb_mac = new StringBuffer();
+		for (int i = 0; i < mac.length; i++)
+		{
+			sb_mac.append(mac[i]);
+			if (i % 2 == 1 && i > 0 && i < mac.length - 1)
+			{
+				sb_mac.append(":");
+			}
+		}
+
+		result.put("MainType", MainType);
+		result.put("SubType", SubType);
+		result.put("factoryType", factoryType);
+		result.put("date", date);
+		result.put("serial", serial);
+		result.put("dmac", sb_mac.toString());
+		return result;
 
 	}
 

@@ -1,8 +1,11 @@
 package com.greenhousegateway.controller;
 
+import java.util.Map;
+
 import com.greenhousegateway.GreenHouseApplication;
 import com.greenhousegateway.databean.RegDetectorBean;
 import com.greenhousegateway.util.Constants;
+import com.greenhousegateway.util.GreenHouseUtils;
 
 import android.content.Context;
 import android.os.Handler;
@@ -16,22 +19,28 @@ public class GatewayAddDetectorTask extends BaseTask
 {
 
 	private static final int TAG = TaskConstants.ADD_DETECTOR_TASK;
-	private String dmac;
+	private String SerialNumber;
 
-	public GatewayAddDetectorTask(Handler handler, Context _context, String _dmac)
+	public GatewayAddDetectorTask(Handler handler, Context _context, String _serialNumber)
 	{
 		super(handler, _context);
-		dmac = _dmac;
+		SerialNumber = _serialNumber;
 	}
 
 	@Override
 	public void run()
 	{
+		Map<String, String> parseSerial = GreenHouseUtils.parseSerialNumber(SerialNumber);
+		String dmac = "";
+		if (parseSerial != null)
+		{
+			dmac = parseSerial.get("dmac");
+		}
 		RegDetectorBean detectorBean = new RegDetectorBean();
 		detectorBean.gwid = GreenHouseApplication.gwid;
 		detectorBean.gwToken = GreenHouseApplication.gwToken;
 		detectorBean.dmac = dmac;
-		detectorBean.action = 1;//添加探头的action是1
+		detectorBean.action = 1;// 添加探头的action是1
 		detectorBean = (RegDetectorBean) httpManager.requestServer(Constants.RegDetector_Url, detectorBean, true);
 
 		if (detectorBean == null)

@@ -101,29 +101,37 @@ public class UploadDataService extends Service
 			Iterator<String> iterator = macSet.iterator();
 			while (iterator.hasNext())
 			{
-				L.d("正在入库！！！！");
-				String mac = iterator.next();
-				List<UploadDataBean> beanList = DataKeeper.detectorDataMap.get(mac);
-				UploadDataBean dataBean = beanList.get(beanList.size() - 1);
-				Iterator<DetectorBean> it2 = DataKeeper.dataKeeper_detectorList.iterator();
-				while (it2.hasNext())
+				try
 				{
-					DetectorBean t_Bean = it2.next();
-					if (t_Bean.dmac.equals(mac))
+					L.d("正在入库！！！！");
+					String mac = iterator.next();
+					List<UploadDataBean> beanList = DataKeeper.detectorDataMap.get(mac);
+					UploadDataBean dataBean = beanList.get(beanList.size() - 1);
+					Iterator<DetectorBean> it2 = DataKeeper.dataKeeper_detectorList.iterator();
+					while (it2.hasNext())
 					{
-						dataBean.did = t_Bean.did;
-						break;
+						DetectorBean t_Bean = it2.next();
+						if (t_Bean.dmac.equals(mac))
+						{
+							dataBean.did = t_Bean.did;
+							break;
+						}
 					}
+					L.d("即将入库的数据--->"+dataBean.toString());
+					ContentValues cv = new ContentValues();
+					cv.put("did", dataBean.did);
+					cv.put("mac", dataBean.dmac);
+					cv.put("temperature", dataBean.temperature);
+					cv.put("humidity", dataBean.humidity);
+					cv.put("beam", dataBean.beam);
+					cv.put("delivered", dataBean.delivered);
+					dbHelper.getWritableDatabase().insert("detectors", "mac", cv);
+					L.d("入库完毕！！！！");
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+					L.d("入库出现问题！！！");
 				}
-				ContentValues cv = new ContentValues();
-				cv.put("did", dataBean.did);
-				cv.put("mac", dataBean.dmac);
-				cv.put("temperature", dataBean.temperature);
-				cv.put("humidity", dataBean.humidity);
-				cv.put("beam", dataBean.beam);
-				cv.put("delivered", dataBean.delivered);
-				dbHelper.getWritableDatabase().insert("detectors", "mac", cv);
-
 			}
 
 			L.d("开始检索未发送信息！！！！");
