@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.greenhousegateway.GreenHouseApplication;
-import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.hardware.SerialPortUSBManager;
 import com.greenhousegateway.service.UploadDataService;
 import com.greenhousegateway.util.Constants;
@@ -126,12 +126,13 @@ public class ReadHardwareDataTask extends BaseTask
 						L.d("power is ->" + power + "~");
 						Lw.WriteLog(context, "mac is ->" + mac + "~" + "temp is ->" + temp + "~" + "humi is ->" + humi + "~" + "light is ->" + light + "~" + "power is ->" + power);
 
-						UploadDataBean uploadDataBean = new UploadDataBean();
+						HardwareDataBean uploadDataBean = new HardwareDataBean();
 						uploadDataBean.dmac = mac;
 						uploadDataBean.temperature = Double.parseDouble(temp);
 						uploadDataBean.humidity = Double.parseDouble(humi);
 						uploadDataBean.beam = Double.parseDouble(light);
 						uploadDataBean.power = Double.parseDouble(power);
+						uploadDataBean.logTime = new Date().getTime() + GreenHouseApplication.SERVER_TIME;
 						uploadDataBean.delivered = -1;
 						sendResultMessage(TASK_TAG, uploadDataBean, TaskConstants.TASK_SUCCESS, 0);
 					}

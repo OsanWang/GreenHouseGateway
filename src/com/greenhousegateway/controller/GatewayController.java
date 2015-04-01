@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.google.gson.Gson;
-import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.service.UploadDataService;
 import com.greenhousegateway.util.L;
 
@@ -69,7 +69,7 @@ public class GatewayController
 	 * @param _humidity
 	 * @param _beam
 	 */
-	public void gatewayUpload(Handler taskHandler,List<UploadDataBean> uploadDataBeans )
+	public void gatewayUpload(Handler taskHandler,List<HardwareDataBean> uploadDataBeans )
 	{
 		startTask(new GatewayUploadTask(taskHandler,mContext, uploadDataBeans));
 

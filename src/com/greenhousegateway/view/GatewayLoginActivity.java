@@ -8,7 +8,7 @@ import com.greenhousegateway.GreenHouseApplication;
 import com.greenhousegateway.R;
 import com.greenhousegateway.controller.TaskConstants;
 import com.greenhousegateway.databean.GetDetectorListBean;
-import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.util.L;
 
 import android.app.AlertDialog;
@@ -165,10 +165,10 @@ public class GatewayLoginActivity extends BaseActivity
 
 	public void initDetectorsList(String mac)
 	{
-		List<UploadDataBean> t_list = DataKeeper.detectorDataMap.get(mac);
+		List<HardwareDataBean> t_list = DataKeeper.detectorDataMap.get(mac);
 		if (t_list == null)
 		{// 有数据才去new 一个LIST 确保 dataMap里面不会出现空值，如果没有接到数据，就不会走这一步
-			t_list = new ArrayList<UploadDataBean>();
+			t_list = new ArrayList<HardwareDataBean>();
 		}
 		DataKeeper.detectorDataMap.put(mac, t_list);
 

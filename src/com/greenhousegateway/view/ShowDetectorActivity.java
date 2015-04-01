@@ -14,7 +14,7 @@ import com.greenhousegateway.controller.ReadHardwareDataTask;
 import com.greenhousegateway.controller.TaskConstants;
 import com.greenhousegateway.databean.DetectorBean;
 import com.greenhousegateway.databean.LoginDataBean;
-import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.service.UploadDataService;
 import com.greenhousegateway.util.Constants;
 import com.greenhousegateway.util.L;
@@ -121,7 +121,7 @@ public class ShowDetectorActivity extends BaseActivity
 		}
 	}
 
-	private void updateDetectorsGridLayout(UploadDataBean _uploadDataBean)
+	private void updateDetectorsGridLayout(HardwareDataBean _uploadDataBean)
 	{
 		// 根据mac找到需要更新的view
 		L.d("正在更新探头框体: mac--->" + _uploadDataBean.dmac);
@@ -284,7 +284,7 @@ public class ShowDetectorActivity extends BaseActivity
 					}
 					if (msg.arg1 == TaskConstants.TASK_SUCCESS)
 					{// 数据到来刷新界面
-						UploadDataBean uploadDataBean = (UploadDataBean) msg.obj;
+						HardwareDataBean uploadDataBean = (HardwareDataBean) msg.obj;
 						updateDetectorsGridLayout(uploadDataBean);
 					}
 					break;

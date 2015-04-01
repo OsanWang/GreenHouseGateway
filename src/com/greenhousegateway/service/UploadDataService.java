@@ -12,13 +12,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.greenhousegateway.DataKeeper;
+import com.greenhousegateway.GreenHouseApplication;
 import com.greenhousegateway.annotation.Coloumn;
 import com.greenhousegateway.controller.GatewayController;
 import com.greenhousegateway.controller.TaskConstants;
 import com.greenhousegateway.database.GreenHouseDBHelper;
 import com.greenhousegateway.databean.DetectorBean;
 import com.greenhousegateway.databean.LoginDataBean;
-import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.util.Constants;
 import com.greenhousegateway.util.GreenHouseUtils;
 import com.greenhousegateway.util.L;
@@ -67,7 +68,7 @@ public class UploadDataService extends Service
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
 		mSingleThreadExecutor.execute(new UploadDataScheduledRunnable());
-		mScheduledExecutorService.scheduleAtFixedRate(new SaveDate2SqlAndUpload(), 1 * 1000, 30 * 1000, TimeUnit.MILLISECONDS);
+		mScheduledExecutorService.scheduleAtFixedRate(new SaveDate2SqlAndUpload(), 1 * 1000, 60 * 1000, TimeUnit.MILLISECONDS);
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -103,10 +104,10 @@ public class UploadDataService extends Service
 			{
 				try
 				{
-					L.d("正在入库！！！！");
 					String mac = iterator.next();
-					List<UploadDataBean> beanList = DataKeeper.detectorDataMap.get(mac);
-					UploadDataBean dataBean = beanList.get(beanList.size() - 1);
+					L.d("正在入库！！！！mac--->" + mac);
+					List<HardwareDataBean> beanList = DataKeeper.detectorDataMap.get(mac);
+					HardwareDataBean dataBean = beanList.get(beanList.size() - 1);
 					Iterator<DetectorBean> it2 = DataKeeper.dataKeeper_detectorList.iterator();
 					while (it2.hasNext())
 					{
@@ -117,14 +118,16 @@ public class UploadDataService extends Service
 							break;
 						}
 					}
-					L.d("即将入库的数据--->"+dataBean.toString());
+					L.d("即将入库的数据--->" + dataBean.toString());
 					ContentValues cv = new ContentValues();
 					cv.put("did", dataBean.did);
-					cv.put("mac", dataBean.dmac);
+					cv.put("dmac", dataBean.dmac);
 					cv.put("temperature", dataBean.temperature);
 					cv.put("humidity", dataBean.humidity);
 					cv.put("beam", dataBean.beam);
+					cv.put("power", dataBean.power);
 					cv.put("delivered", dataBean.delivered);
+					cv.put("logTime", dataBean.logTime);
 					dbHelper.getWritableDatabase().insert("detectors", "mac", cv);
 					L.d("入库完毕！！！！");
 				} catch (Exception e)
@@ -136,32 +139,37 @@ public class UploadDataService extends Service
 
 			L.d("开始检索未发送信息！！！！");
 
-			List<UploadDataBean> datas = new ArrayList<UploadDataBean>();
-			List<Integer> dataIdList = new ArrayList<>();
+			List<HardwareDataBean> datas = new ArrayList<HardwareDataBean>();
+			// List<Integer> dataIdList = new ArrayList<>();
 			Cursor c = dbHelper.getReadableDatabase().query("detectors", null, "delivered = -1", null, null, null, null);
 			if (c != null)
 			{
-				Class<UploadDataBean> javabeanClass = UploadDataBean.class;
+//				L.d("游标不为空！！！！");
+				Class<HardwareDataBean> javabeanClass = HardwareDataBean.class;
 				Field[] fields = javabeanClass.getDeclaredFields();
 				while (c.moveToNext())
 				{
-					UploadDataBean bean;
+					HardwareDataBean bean;
 					try
 					{
 						bean = javabeanClass.newInstance();
 						for (int i = 0; i < fields.length; ++i)
 						{
 							Coloumn coloumn = fields[i].getAnnotation(Coloumn.class);
-							if (!(coloumn == null) && coloumn.name() != "")
+							if (coloumn != null)
 							{
 								fields[i].setAccessible(true);
-								fields[i].set(bean, GreenHouseUtils.setValue(fields[i].getType(), c, c.getColumnIndexOrThrow(coloumn.name())));
+								if (!coloumn.name().equals(""))
+									fields[i].set(bean, GreenHouseUtils.setValue(fields[i].getType(), c, c.getColumnIndexOrThrow(coloumn.name())));
+								else
+									fields[i].set(bean, GreenHouseUtils.setValue(fields[i].getType(), c, c.getColumnIndexOrThrow(fields[i].getName())));
 							}
 						}
 						if (bean != null)
 						{
+							L.d("检索到数据---->" + bean.toString());
 							datas.add(bean);
-							dataIdList.add(bean.did);
+							// dataIdList.add(bean.did);
 						}
 					} catch (InstantiationException | IllegalAccessException e)
 					{
@@ -193,11 +201,12 @@ public class UploadDataService extends Service
 				} else if (msg.arg1 == TaskConstants.TASK_SUCCESS)
 				{
 					// 把数据写入缓存
-					UploadDataBean bean = (UploadDataBean) msg.obj;
-					List<UploadDataBean> t_list = DataKeeper.detectorDataMap.get(bean.dmac);
+					HardwareDataBean bean = (HardwareDataBean) msg.obj;
+					List<HardwareDataBean> t_list = DataKeeper.detectorDataMap.get(bean.dmac);
+					L.d("正在把数据写入缓存---->dmac ->" + bean.dmac);
 					if (t_list == null)
 					{// 有数据才去new 一个LIST 确保 dataMap里面不会出现空值，如果没有接到数据，就不会走这一步
-						t_list = new ArrayList<UploadDataBean>();
+						t_list = new ArrayList<HardwareDataBean>();
 					}
 					t_list.add(bean);
 					while (t_list.size() > 1000)

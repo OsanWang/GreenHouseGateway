@@ -13,7 +13,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public final class GreenHouseDBHelper extends SQLiteOpenHelper
 {
-	public static final int DataBaseVersion = 1;//数据库版本
+	public static final int DataBaseVersion = 1;// 数据库版本
+
 	public GreenHouseDBHelper(Context context, String name, CursorFactory factory, int version)
 	{
 		super(context, name, factory, DataBaseVersion);
@@ -22,7 +23,7 @@ public final class GreenHouseDBHelper extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
-		String sql_create_table_detectordata = "create table IF NOT EXISTS  detectors (id integer primary key,did int,mac text,temperature real,humidity real,beam real ,logTime integer,delivered integer);";
+		String sql_create_table_detectordata = "create table IF NOT EXISTS  detectors (id integer primary key,did integer,dmac text,temperature real,humidity real,beam real ,power real ,logTime integer,delivered integer);";
 		db.execSQL(sql_create_table_detectordata);
 
 	}

@@ -5,7 +5,7 @@ import com.greenhousegateway.R;
 import com.greenhousegateway.controller.GatewayController;
 import com.greenhousegateway.controller.ReadHardwareDataTask;
 import com.greenhousegateway.controller.TaskConstants;
-import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.service.UploadDataService;
 import com.greenhousegateway.util.L;
 import com.greenhousegateway.util.Lw;
@@ -126,7 +126,7 @@ public class TestActivity extends BaseActivity
 						double humi = readResult[1];
 						double beam = readResult[2];
 						// 把数据放入DataKeeper
-						UploadDataBean dataBean = new UploadDataBean();
+						HardwareDataBean dataBean = new HardwareDataBean();
 						dataBean.temperature = temp;
 						dataBean.humidity = humi;
 						dataBean.beam = beam;
@@ -153,7 +153,7 @@ public class TestActivity extends BaseActivity
 						double humi = readResult[1];
 						double beam = readResult[2];
 						// 把数据放入DataKeeper
-						UploadDataBean dataBean = new UploadDataBean();
+						HardwareDataBean dataBean = new HardwareDataBean();
 						dataBean.temperature = temp;
 						dataBean.humidity = humi;
 						dataBean.beam = beam;

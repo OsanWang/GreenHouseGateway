@@ -1,5 +1,6 @@
 package com.greenhousegateway.databean;
 
+import com.greenhousegateway.annotation.Coloumn;
 import com.greenhousegateway.annotation.HttpAnnotation;
 
 /**
@@ -8,34 +9,42 @@ import com.greenhousegateway.annotation.HttpAnnotation;
  * @author RyanHu
  * 
  */
-public final class UploadDataBean
+public final class HardwareDataBean
 {
 	// 网关唯一ID
 	@HttpAnnotation
 	public int gwid;
-	
-	@HttpAnnotation
-	public String dmac;
-
+	@Coloumn
 	@HttpAnnotation
 	public int did;
+	@Coloumn
+	@HttpAnnotation
+	public String dmac;
 	// 网关token
 	@HttpAnnotation
 	public String gwToken;
 	// 温度
+	@Coloumn
 	@HttpAnnotation
 	public double temperature;
 	// 湿度
+	@Coloumn
 	@HttpAnnotation
 	public double humidity;
 	// 光照
+	@Coloumn
 	@HttpAnnotation
 	public double beam;
 	// 电量
+	@Coloumn
 	@HttpAnnotation
 	public double power;
 	// 是否已经送达
+	@Coloumn
 	public int delivered;
+	
+	@Coloumn
+	public long logTime;
 	@Override
 	public String toString()
 	{

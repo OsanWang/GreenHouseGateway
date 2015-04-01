@@ -12,7 +12,7 @@ import com.greenhousegateway.GreenHouseApplication;
 import com.greenhousegateway.R;
 import com.greenhousegateway.controller.TaskConstants;
 import com.greenhousegateway.databean.LoginDataBean;
-import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.service.UploadDataService;
 import com.greenhousegateway.util.Constants;
 import com.greenhousegateway.util.L;
@@ -123,7 +123,7 @@ public class ShowChartActivity extends BaseActivity
 					break;
 				case TaskConstants.GATEWAY_READHARDWARE_TASK:
 					// 读取硬件成功，准备刷新界面
-					UploadDataBean bean = (UploadDataBean) msg.obj;
+					HardwareDataBean bean = (HardwareDataBean) msg.obj;
 					if (msg.arg1 == TaskConstants.TASK_SUCCESS && dmac.equals(bean.dmac))
 					{
 						initMACharts(temp_machart, TYPE_HOUR, TEMP);
@@ -146,10 +146,10 @@ public class ShowChartActivity extends BaseActivity
 
 	public void updataTextView()
 	{
-		List<UploadDataBean> dataBeanlist = DataKeeper.detectorDataMap.get(dmac);
+		List<HardwareDataBean> dataBeanlist = DataKeeper.detectorDataMap.get(dmac);
 		if(dataBeanlist.size() >0)
 		{
-			UploadDataBean currentBean = dataBeanlist.get(dataBeanlist.size() - 1);
+			HardwareDataBean currentBean = dataBeanlist.get(dataBeanlist.size() - 1);
 			temp_tv.setText(String.valueOf(currentBean.temperature));
 			humi_tv.setText(String.valueOf(currentBean.humidity));
 			beam_tv.setText(String.valueOf(currentBean.beam));
@@ -233,16 +233,16 @@ public class ShowChartActivity extends BaseActivity
 		default:
 			break;
 		}
-		ArrayList<UploadDataBean> listDataBean = (ArrayList<UploadDataBean>) DataKeeper.detectorDataMap.get(dmac);
+		ArrayList<HardwareDataBean> listDataBean = (ArrayList<HardwareDataBean>) DataKeeper.detectorDataMap.get(dmac);
 		List<Float> data = new ArrayList<Float>();
 		switch (dataTYPE)
 		{
 		case TEMP:
 		{
-			Iterator<UploadDataBean> iterator = listDataBean.iterator();
+			Iterator<HardwareDataBean> iterator = listDataBean.iterator();
 			while (iterator.hasNext())
 			{
-				UploadDataBean greenHouseBaseDataBean = (UploadDataBean) iterator.next();
+				HardwareDataBean greenHouseBaseDataBean = (HardwareDataBean) iterator.next();
 				data.add((float) greenHouseBaseDataBean.temperature);
 			}
 			machart.setMaxValue(100);
@@ -252,10 +252,10 @@ public class ShowChartActivity extends BaseActivity
 
 		case HUMI:
 		{
-			Iterator<UploadDataBean> iterator = listDataBean.iterator();
+			Iterator<HardwareDataBean> iterator = listDataBean.iterator();
 			while (iterator.hasNext())
 			{
-				UploadDataBean greenHouseBaseDataBean = (UploadDataBean) iterator.next();
+				HardwareDataBean greenHouseBaseDataBean = (HardwareDataBean) iterator.next();
 				data.add((float) greenHouseBaseDataBean.humidity);
 			}
 			machart.setMaxValue(100);
@@ -266,10 +266,10 @@ public class ShowChartActivity extends BaseActivity
 
 		case BEAM:
 		{
-			Iterator<UploadDataBean> iterator = listDataBean.iterator();
+			Iterator<HardwareDataBean> iterator = listDataBean.iterator();
 			while (iterator.hasNext())
 			{
-				UploadDataBean greenHouseBaseDataBean = (UploadDataBean) iterator.next();
+				HardwareDataBean greenHouseBaseDataBean = (HardwareDataBean) iterator.next();
 				data.add((float) greenHouseBaseDataBean.beam);
 			}
 			machart.setMaxValue(300);

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.greenhousegateway.databean.DetectorBean;
-import com.greenhousegateway.databean.UploadDataBean;
+import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.util.Constants;
 
 /**
@@ -25,7 +25,7 @@ public class DataKeeper
 //	public static ArrayList<UploadDataBean> dataKeeper_hour = new ArrayList<UploadDataBean>();
 //	
 	//保存探头数据
-	public static Map<String, List<UploadDataBean>> detectorDataMap = new HashMap<String, List<UploadDataBean>>();
+	public static Map<String, List<HardwareDataBean>> detectorDataMap = new HashMap<String, List<HardwareDataBean>>();
 
 //	static {
 //		UploadDataBean databean = new UploadDataBean();
