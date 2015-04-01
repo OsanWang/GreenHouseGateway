@@ -189,14 +189,10 @@ public class ShowChartActivity extends BaseActivity
 		{
 		case TYPE_HOUR:
 			int pointCount = 60;
-			if(listDataBean.size()>1)
+			if (listDataBean.size() > 1)
 			{
-				pointCount = (int) (Constants.HOUR / (listDataBean.get(1).logTime - listDataBean.get(0).logTime));
-				L.d("时间采样点共计---->"+pointCount);
-			}
-			while (listDataBean.size() > 60)
-			{
-				listDataBean.remove(0);
+				pointCount = (int) (Constants.HOUR / (listDataBean.get(listDataBean.size() - 1).logTime - listDataBean.get(listDataBean.size() - 2).logTime));
+				L.d("时间采样点共计---->" + pointCount);
 			}
 			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime));
 			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 5 * Constants.MINUTES));
@@ -212,6 +208,10 @@ public class ShowChartActivity extends BaseActivity
 			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 55 * Constants.MINUTES));
 			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 60 * Constants.MINUTES));
 			machart.setMaxPointNum(pointCount);
+			while (listDataBean.size() > 60)
+			{// 大于采样点的都给删掉
+				listDataBean.remove(0);
+			}
 			break;
 		case TYPE_DAY:
 			xtitle.add("0时");
