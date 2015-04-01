@@ -53,7 +53,8 @@ public class GatewayDelDetectorTask extends BaseTask
 					DetectorBean t_bean = it.next();
 					if (t_bean.dmac .equals(dmac))
 					{
-						DataKeeper.dataKeeper_detectorList.remove(t_bean);
+						it.remove();
+//						DataKeeper.dataKeeper_detectorList.remove(t_bean);
 					}
 				}
 				sendResultMessage(TAG, detectorBean, TaskConstants.TASK_SUCCESS, 0);

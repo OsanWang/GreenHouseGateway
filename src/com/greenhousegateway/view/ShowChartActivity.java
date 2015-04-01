@@ -208,7 +208,7 @@ public class ShowChartActivity extends BaseActivity
 			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 55 * Constants.MINUTES));
 			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 60 * Constants.MINUTES));
 			machart.setMaxPointNum(pointCount);
-			while (listDataBean.size() > 60)
+			while (listDataBean.size() > pointCount)
 			{// 大于采样点的都给删掉
 				listDataBean.remove(0);
 			}

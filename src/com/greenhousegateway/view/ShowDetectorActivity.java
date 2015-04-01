@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -82,7 +83,6 @@ public class ShowDetectorActivity extends BaseActivity
 		showClientApkUrlBtn.setOnClickListener(this);
 		showQRCodeBtn.setOnClickListener(this);
 		showGwInfoBtn.setOnClickListener(this);
-		initDetectorsGridLayout();
 	}
 
 	/**
@@ -230,6 +230,12 @@ public class ShowDetectorActivity extends BaseActivity
 	{
 		startService(new Intent(this, UploadDataService.class));
 	}
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		initDetectorsGridLayout();
+	}
 
 	@Override
 	protected void setTaskHandler()
@@ -244,8 +250,9 @@ public class ShowDetectorActivity extends BaseActivity
 				case TaskConstants.ADD_DETECTOR_TASK:
 					if (msg.arg1 == TaskConstants.TASK_SUCCESS)
 					{
-						startActivityByName(GatewayLoginActivity.class);
-						ShowDetectorActivity.this.finish();
+						Intent intent = new Intent(ShowDetectorActivity.this,GatewayLoginActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(intent);
 					} else
 					{
 						Toast.makeText(mApp, "添加探头失败！", Toast.LENGTH_LONG).show();
@@ -255,10 +262,14 @@ public class ShowDetectorActivity extends BaseActivity
 					if (msg.arg1 == TaskConstants.TASK_SUCCESS)
 					{
 						Toast.makeText(mApp, "删除探头成功！", Toast.LENGTH_LONG).show();
+						Intent intent = new Intent(ShowDetectorActivity.this,GatewayLoginActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(intent);
 					} else
 					{
 						Toast.makeText(mApp, "删除探头失败！", Toast.LENGTH_LONG).show();
 					}
+					break;
 				case TaskConstants.GATEWAY_READHARDWARE_TASK:
 					if (msg.arg1 == TaskConstants.CREATE_SERIAL_FAILED || msg.arg1 == TaskConstants.OPEN_SERIAL_FAILED)
 					{
