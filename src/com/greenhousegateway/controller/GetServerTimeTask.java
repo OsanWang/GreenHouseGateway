@@ -28,6 +28,7 @@ public class GetServerTimeTask extends BaseTask
 		getServerTimeBean = (GetServerTimeBean) httpManager.requestServer(Constants.ServerTime_Url, getServerTimeBean, true);
 		if (getServerTimeBean == null)
 		{
+			L.d("获取服务器时间失败");
 			sendResultMessage(TAG, Constants.REQUEST_SERVER_RETURN_NULL, TaskConstants.TASK_FAILED, 0);
 			return;
 		} else

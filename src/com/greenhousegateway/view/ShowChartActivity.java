@@ -1,6 +1,8 @@
 package com.greenhousegateway.view;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import com.greenhousegateway.databean.LoginDataBean;
 import com.greenhousegateway.databean.HardwareDataBean;
 import com.greenhousegateway.service.UploadDataService;
 import com.greenhousegateway.util.Constants;
+import com.greenhousegateway.util.GreenHouseUtils;
 import com.greenhousegateway.util.L;
 
 import android.os.Bundle;
@@ -147,7 +150,7 @@ public class ShowChartActivity extends BaseActivity
 	public void updataTextView()
 	{
 		List<HardwareDataBean> dataBeanlist = DataKeeper.detectorDataMap.get(dmac);
-		if(dataBeanlist.size() >0)
+		if (dataBeanlist.size() > 0)
 		{
 			HardwareDataBean currentBean = dataBeanlist.get(dataBeanlist.size() - 1);
 			temp_tv.setText(String.valueOf(currentBean.temperature));
@@ -166,6 +169,14 @@ public class ShowChartActivity extends BaseActivity
 
 	public void initMACharts(MAChart machart, int TIME_TYPE, int dataTYPE)
 	{
+		ArrayList<HardwareDataBean> listDataBean = (ArrayList<HardwareDataBean>) DataKeeper.detectorDataMap.get(dmac);
+		if (listDataBean == null || listDataBean.size() == 0)
+		{// 防止界面无数据崩溃
+			listDataBean = new ArrayList<HardwareDataBean>();
+			HardwareDataBean _HardwareDataBean = new HardwareDataBean();
+			_HardwareDataBean.logTime = new Date().getTime() + GreenHouseApplication.SERVER_TIME;
+			listDataBean.add(_HardwareDataBean);
+		}
 		List<String> ytitle = new ArrayList<String>();
 		ytitle.add("0");
 		ytitle.add("25");
@@ -177,20 +188,30 @@ public class ShowChartActivity extends BaseActivity
 		switch (TIME_TYPE)
 		{
 		case TYPE_HOUR:
-			xtitle.add("0分");
-			xtitle.add("5分");
-			xtitle.add("10分");
-			xtitle.add("15分");
-			xtitle.add("20分");
-			xtitle.add("25分");
-			xtitle.add("30分");
-			xtitle.add("35分");
-			xtitle.add("40分");
-			xtitle.add("45分");
-			xtitle.add("50分");
-			xtitle.add("55分");
-			xtitle.add("60分");
-			machart.setMaxPointNum(60);
+			int pointCount = 60;
+			if(listDataBean.size()>1)
+			{
+				pointCount = (int) (Constants.HOUR / (listDataBean.get(1).logTime - listDataBean.get(0).logTime));
+				L.d("时间采样点共计---->"+pointCount);
+			}
+			while (listDataBean.size() > 60)
+			{
+				listDataBean.remove(0);
+			}
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 5 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 10 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 15 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 20 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 25 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 30 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 35 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 40 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 45 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 50 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 55 * Constants.MINUTES));
+			xtitle.add(getHHmmLogTime(listDataBean.get(0).logTime + 60 * Constants.MINUTES));
+			machart.setMaxPointNum(pointCount);
 			break;
 		case TYPE_DAY:
 			xtitle.add("0时");
@@ -219,6 +240,10 @@ public class ShowChartActivity extends BaseActivity
 			xtitle.add("23");
 			xtitle.add("24");
 			machart.setMaxPointNum(24);
+			while (listDataBean.size() > 24)
+			{
+				listDataBean.remove(0);
+			}
 			break;
 		case TYPE_WEEK:
 			xtitle.add("周一");
@@ -229,11 +254,15 @@ public class ShowChartActivity extends BaseActivity
 			xtitle.add("周六");
 			xtitle.add("周日");
 			machart.setMaxPointNum(7);
+			while (listDataBean.size() > 7)
+			{
+				listDataBean.remove(0);
+
+			}
 			break;
 		default:
 			break;
 		}
-		ArrayList<HardwareDataBean> listDataBean = (ArrayList<HardwareDataBean>) DataKeeper.detectorDataMap.get(dmac);
 		List<Float> data = new ArrayList<Float>();
 		switch (dataTYPE)
 		{
@@ -319,5 +348,11 @@ public class ShowChartActivity extends BaseActivity
 		// 为chart1增加均线
 		machart.setLineData(lines);
 		// machart.addNotify(new ITouchEventResponse()
+	}
+
+	private String getHHmmLogTime(long logTime)
+	{
+		String result = new SimpleDateFormat("HH:mm").format(logTime);
+		return result;
 	}
 }

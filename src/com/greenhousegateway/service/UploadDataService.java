@@ -2,6 +2,7 @@ package com.greenhousegateway.service;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -60,7 +61,6 @@ public class UploadDataService extends Service
 		controller = GatewayController.getInstance(this);
 		mTaskHandler = new TaskHandler();
 		// 首先去拿网关id
-		// controller.gatewayLogin(mTaskHandler);
 		GreenHouseUtils.acquireWakeLock(this);
 	}
 
@@ -68,7 +68,7 @@ public class UploadDataService extends Service
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
 		mSingleThreadExecutor.execute(new UploadDataScheduledRunnable());
-		mScheduledExecutorService.scheduleAtFixedRate(new SaveDate2SqlAndUpload(), 1 * 1000, 60 * 1000, TimeUnit.MILLISECONDS);
+		mScheduledExecutorService.scheduleAtFixedRate(new SaveDate2SqlAndUpload(),Constants.MINUTES,Constants.MINUTES, TimeUnit.MILLISECONDS);
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -136,18 +136,20 @@ public class UploadDataService extends Service
 					L.d("入库出现问题！！！");
 				}
 			}
+			
+			L.d("开始删除过期数据！！！！");
 
-			L.d("开始检索未发送信息！！！！");
+			dbHelper.getWritableDatabase().delete("detectors", "logTime<" + ((new Date().getTime() + GreenHouseApplication.SERVER_TIME) - 3 * Constants.DAY), null);
+			L.d("开始删除过期数据完成！！！！开始检索未发送信息！！！！");
 
 			List<HardwareDataBean> datas = new ArrayList<HardwareDataBean>();
-			// List<Integer> dataIdList = new ArrayList<>();
-			Cursor c = dbHelper.getReadableDatabase().query("detectors", null, "delivered = -1", null, null, null, null);
-			if (c != null)
+			Cursor cursor_nodelivered = dbHelper.getReadableDatabase().query("detectors", null, "delivered = -1", null, null, null, null);
+			if (cursor_nodelivered != null)
 			{
-//				L.d("游标不为空！！！！");
+				// L.d("游标不为空！！！！");
 				Class<HardwareDataBean> javabeanClass = HardwareDataBean.class;
 				Field[] fields = javabeanClass.getDeclaredFields();
-				while (c.moveToNext())
+				while (cursor_nodelivered.moveToNext())
 				{
 					HardwareDataBean bean;
 					try
@@ -160,9 +162,9 @@ public class UploadDataService extends Service
 							{
 								fields[i].setAccessible(true);
 								if (!coloumn.name().equals(""))
-									fields[i].set(bean, GreenHouseUtils.setValue(fields[i].getType(), c, c.getColumnIndexOrThrow(coloumn.name())));
+									fields[i].set(bean, GreenHouseUtils.setValue(fields[i].getType(), cursor_nodelivered, cursor_nodelivered.getColumnIndexOrThrow(coloumn.name())));
 								else
-									fields[i].set(bean, GreenHouseUtils.setValue(fields[i].getType(), c, c.getColumnIndexOrThrow(fields[i].getName())));
+									fields[i].set(bean, GreenHouseUtils.setValue(fields[i].getType(), cursor_nodelivered, cursor_nodelivered.getColumnIndexOrThrow(fields[i].getName())));
 							}
 						}
 						if (bean != null)

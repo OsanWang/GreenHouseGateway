@@ -56,10 +56,12 @@ final class GatewayUploadTask extends BaseTask
 
 		// TODO
 		// 这里差一个转化，把基本的数据库每条DataBean通过时间作为判断，然后组包，转成JSON
-		 uploadBean = (UploadBean)httpManager.requestServer(Constants.Upload_Url, uploadBean, true,json);
+		uploadBean = (UploadBean)httpManager.requestServer(Constants.Upload_Url, uploadBean, true,json);
 		if (uploadBean == null)
 		{
 			L.e("没有从服务器拿到数据");
+			sendResultMessage(TASK_TAG, "上传数据失败！", TaskConstants.TASK_SUCCESS, 0);
+			return;
 		}
 		if (uploadBean.status.equals(Constants.Status_Success))
 		{

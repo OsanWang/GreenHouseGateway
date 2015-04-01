@@ -31,7 +31,10 @@ public interface Constants
 	int TEMP_MIN = 0;
 	int BEAM_MIN = 0;
 	int HUMI_MIN = 0;
-	
+	int MINUTES = 60 *1000;
+	int HOUR = 60*MINUTES;
+	int DAY = 24 *HOUR;
+	int WEEK = 7*DAY;
 	
 	//服务器联网相关
 	
